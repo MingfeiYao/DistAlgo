@@ -1,7 +1,7 @@
 # Distributed coursework
 # Mingfei Yao (my1914)
 
-MODULES = system1 system2 system3 process1 process2 printer pl app
+MODULES = system3 process printer app pl
 
 # Build
 
@@ -21,18 +21,9 @@ clean:
 
 # Run
 
-SYSTEM	= system1
+SYSTEM	= system3
 L_ERL	= erl -noshell -pa ebin -setcookie pass
 
-run1:	all
+run:	all
 	$(L_ERL) -s $(SYSTEM) start
 
-SYSTEM2	= system2
-
-run2:	all
-	$(L_ERL) -s $(SYSTEM2) start
-
-SYSTEM3	= system3
-
-run3:	all
-	$(L_ERL) -s $(SYSTEM3) start
