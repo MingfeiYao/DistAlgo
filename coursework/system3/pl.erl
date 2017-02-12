@@ -6,21 +6,21 @@
 start() ->
   receive
     {bind, PLS} ->
-      bindApp(PLS)
+      bindBeb(PLS)
   end.
 
-bindApp(PLS) ->
+bindBeb(PLS) ->
   receive
-    {bind, App} -> 
-      waitForMessage(PLS, App)
+    {bind, Beb} -> 
+      waitForMessage(PLS, Beb)
   end.
 
-waitForMessage(PLS, App) ->
+waitForMessage(PLS, Beb) ->
   receive
     {message, P_number} ->
-      App ! {message, P_number},
-      waitForMessage(PLS, App);
+      Beb ! {message, P_number},
+      waitForMessage(PLS, Beb);
     {broadcast, P_number} ->
       [ PL ! {message, P_number} || PL <- PLS ],
-      waitForMessage(PLS, App)
+      waitForMessage(PLS, Beb)
   end.

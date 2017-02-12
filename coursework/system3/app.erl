@@ -5,19 +5,19 @@
 
 start(P_number) ->
   receive
-    {bind, PL, Printer} -> 
-      waitForTask(P_number, PL, Printer)
+    {bind, BEB, Printer} -> 
+      waitForTask(P_number, BEB, Printer)
   end.
 
-waitForTask(P_number, PL, Printer) ->
+waitForTask(P_number, BEB, Printer) ->
   receive
     {pl_deliver, Max_messages, Timeout} -> 
       timer:send_after(Timeout, {timeout}),
-      PL ! {broadcast, P_number},
-      startTask(P_number, PL, 1, Max_messages, #{}, Printer)
+      BEB ! {broadcast, P_number},
+      startTask(P_number, BEB, 1, Max_messages, #{}, Printer)
   end.
 
-startTask(P_number, PL, Messages_sent, Max_messages, Messages, Printer) ->
+startTask(P_number, BEB, Messages_sent, Max_messages, Messages, Printer) ->
   receive
     {message, Source_P_number} -> 
       case maps:is_key(Source_P_number, Messages) of
@@ -25,19 +25,19 @@ startTask(P_number, PL, Messages_sent, Max_messages, Messages, Printer) ->
           New_Messages = maps:update(Source_P_number, maps:get(Source_P_number, Messages)+1, Messages),
           if 
             Messages_sent /= Max_messages ->
-              PL ! {broadcast, P_number},
-              startTask(P_number, PL, Messages_sent+1, Max_messages, New_Messages, Printer);
+              BEB ! {broadcast, P_number},
+              startTask(P_number, BEB, Messages_sent+1, Max_messages, New_Messages, Printer);
             true ->
-              startTask(P_number, PL, Messages_sent, Max_messages, New_Messages, Printer)
+              startTask(P_number, BEB, Messages_sent, Max_messages, New_Messages, Printer)
           end;
         false -> 
           New_Messages = maps:put(Source_P_number, 1, Messages),
           if
             Messages_sent /= Max_messages ->
-              PL ! {broadcast, P_number},
-              startTask(P_number, PL, Messages_sent+1, Max_messages, New_Messages, Printer);
+              BEB ! {broadcast, P_number},
+              startTask(P_number, BEB, Messages_sent+1, Max_messages, New_Messages, Printer);
             true ->
-              startTask(P_number, PL, Messages_sent, Max_messages, New_Messages, Printer)
+              startTask(P_number, BEB, Messages_sent, Max_messages, New_Messages, Printer)
           end
       end;
     {timeout} ->
