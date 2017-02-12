@@ -18,9 +18,8 @@ waitForMessages(P_number, Processes, Printer) ->
   end.
 
 broadcastAndReceive(P_number, Processes, 0, Max_messages, Messages, Printer) ->
-  New_messages = maps:update(P_number, maps:get(P_number, Messages)+1, Messages),
   [Process ! {message, P_number} || Process <- Processes],
-  broadcastAndReceive(P_number, Processes, 1, Max_messages, New_messages, Printer);
+  broadcastAndReceive(P_number, Processes, 1, Max_messages, Messages, Printer);
 
 broadcastAndReceive(P_number, Processes, Messages_sent, Max_messages, Messages, Printer) ->
   receive
