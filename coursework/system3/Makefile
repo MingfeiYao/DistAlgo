@@ -1,7 +1,7 @@
 # Distributed coursework
 # Mingfei Yao (my1914)
 
-MODULES = system3 process printer app pl
+MODULES = system3 process printer app pl beb
 
 # Build
 
