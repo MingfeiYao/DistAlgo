@@ -1,0 +1,55 @@
+Mingfei Yao (my1914)
+
+Result for system 4 with 100 broadcasts and 1 second timeout with reliability meter of 100%:
+1 {100,100} {100,100} {100,100} {100,100} {100,100}
+3 {100,100} {100,100} {100,100} {100,100} {100,100}
+4 {100,100} {100,100} {100,100} {100,100} {100,100}
+5 {100,100} {100,100} {100,100} {100,100} {100,100}
+2 {100,100} {100,100} {100,100} {100,100} {100,100}
+
+Deterministic behaviour, all messages sent are received.
+
+Result for system 4 with 100 broadcasts and 1 second timeout with reliability meter of 50%:
+2 {100,52} {100,47} {100,49} {100,44} {100,57}
+4 {100,52} {100,47} {100,49} {100,44} {100,57}
+5 {100,52} {100,47} {100,49} {100,44} {100,57}
+3 {100,52} {100,47} {100,49} {100,44} {100,57}
+1 {100,52} {100,47} {100,49} {100,44} {100,57}
+
+Around 50% of the messages sent are received, which is caused by the 50% message drop rate by lossy PL.
+
+Result for system 4 with 100 broadcasts and 1 second timeout with reliability meter of 0%:
+1 {100,0} {100,0} {100,0} {100,0} {100,0}
+3 {100,0} {100,0} {100,0} {100,0} {100,0}
+4 {100,0} {100,0} {100,0} {100,0} {100,0}
+5 {100,0} {100,0} {100,0} {100,0} {100,0}
+2 {100,0} {100,0} {100,0} {100,0} {100,0}
+
+We see no messages are received despite the 100 messages sent by each process. This is caused by 0% reliability meter which drops all messages in the lossy PL.
+
+Result for system 4 with unlimited broadcast and 1 second timeout with reliability meter of 100%:
+2 {107533,6065} {107533,5575} {107533,4278} {107533,10398} {107533,10441}
+3 {113365,4198} {113365,3601} {113365,2881} {113365,8220} {113365,8290}
+4 {144570,5272} {144570,4508} {144570,3397} {144570,9323} {144570,9370}
+1 {97426,3668} {97426,2818} {97426,2279} {97426,6955} {97426,7026}
+5 {97270,5987} {97270,5482} {97270,4256} {97270,10397} {97270,10439}
+
+There seems to be a lot of messages being cut out by the timeout message, despite having 100% reliable PL.
+
+Result for system 4 with unlimited broadcast and 1 second timeout with reliability meter of 50%:
+1 {128003,4582} {128003,4429} {128003,6425} {128003,5616} {128003,10807}
+4 {104657,3114} {104657,2968} {104657,3676} {104657,3627} {104657,8832}
+3 {80908,8248} {80908,8155} {80908,11338} {80908,8733} {80908,14823}
+5 {107061,9029} {107061,8945} {107061,12234} {107061,9805} {107061,15697}
+2 {97991,5306} {97991,5172} {97991,7460} {97991,5964} {97991,11828}
+
+The messages received seem to be slightly less than results with 100% reliability meter. This may be the effect of the 50% reliability meter droping halve of all messages. 
+
+Result for system 4 with unlimited broadcast and 1 second timeout with reliability meter of 0%:
+1 {406809,0} {406809,0} {406809,0} {406809,0} {406809,0}
+5 {361341,0} {361341,0} {361341,0} {361341,0} {361341,0}
+3 {666991,0} {666991,0} {666991,0} {666991,0} {666991,0}
+2 {451755,0} {451755,0} {451755,0} {451755,0} {451755,0}
+4 {341114,0} {341114,0} {341114,0} {341114,0} {341114,0}o
+
+As all messages are being dropped, little time is spent on processing message as theres no messages. This gives more resources to send out messages, hence we see the messages sent are significantly more that previous two result. This to an extent shows the resources needed of erlang receive statement and message processing and receiving. It may be the case that checking and fetching from mailbox is a costly action. By not doing so, we are able to send more messages.

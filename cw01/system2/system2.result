@@ -1,0 +1,19 @@
+Mingfei Yao (my1914)
+
+Result for system2 with 100 broadcasts and 1 second timeout:
+1 {100,100} {100,100} {100,100} {100,100} {100,100}
+3 {100,100} {100,100} {100,100} {100,100} {100,100}
+2 {100,100} {100,100} {100,100} {100,100} {100,100}
+4 {100,100} {100,100} {100,100} {100,100} {100,100}
+5 {100,100} {100,100} {100,100} {100,100} {100,100}
+
+The result shows all messages sent to the process are received.
+
+Result for system2 with unlimited broadcasts and 1 second timeout:
+4 {103731,36458} {103731,10936} {103731,10512} {103731,23282} {103731,22542}
+5 {101684,35674} {101684,10736} {101684,10323} {101684,23066} {101684,21884}
+1 {128994,46473} {128994,13991} {128994,12289} {128994,29229} {128994,27011}
+3 {87942,31234} {87942,9685} {87942,9269} {87942,19426} {87942,18327}
+2 {78968,27748} {78968,8205} {78968,8490} {78968,16979} {78968,17545}
+
+Both messages sent and messages received seem to be undeterministic. Timeout also seems to be cutting the queue and dicarding messages that havent yet been processed.

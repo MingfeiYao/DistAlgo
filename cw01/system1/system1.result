@@ -1,0 +1,20 @@
+Mingfei Yao (my1914)
+
+Result for message {task1, start, 1000, 3000}:
+1 {1000,1000} {1000,1000} {1000,1000} {1000,1000} {1000,1000}
+2 {1000,1000} {1000,1000} {1000,1000} {1000,1000} {1000,1000}
+3 {1000,1000} {1000,1000} {1000,1000} {1000,1000} {1000,1000}
+4 {1000,1000} {1000,1000} {1000,1000} {1000,1000} {1000,1000}
+5 {1000,1000} {1000,1000} {1000,1000} {1000,1000} {1000,1000}
+
+The above result has a deterministic behaviour, all messages sent are received by the target process.
+
+
+Result for message {task, start, -1, 3000}:
+2 {654646,226569} {654646,654646} {654646,649138} {654646,213093} {654646,685777}
+5 {685778,226569} {685778,654646} {685778,649138} {685778,213093} {685778,685777}
+1 {226570,226570} {226570,654645} {226570,649137} {226570,213094} {226570,685776}
+3 {649138,226569} {649138,654646} {649138,649138} {649138,213093} {649138,685777}
+4 {213094,226569} {213094,654646} {213094,649138} {213094,213093} {213094,685777}
+
+This is the result of unlimited messages with a 3 second timeout. The messages received from each process is almost same as the messages sent by that process. Some messages are cut out, this may be caused by the messages queued after the timeout messages being ignored as process terminates on timeout.

@@ -1,0 +1,21 @@
+Mingfei Yao (my1914)
+
+Result for system 5 with 100 broadcasts with 1 second timeout:
+3 {100,0} {100,0} {100,0} {100,0} {100,0}
+1 {100,100} {100,100} {100,100} {100,100} {100,100}
+2 {100,100} {100,100} {100,100} {100,100} {100,100}
+5 {100,100} {100,100} {100,100} {100,100} {100,100}
+4 {100,100} {100,100} {100,100} {100,100} {100,100}
+
+Process 3 seems to have the chance to broadcast all 100 messages before timeout, however it is receiving 0 messages from the processes which may be due to the crash.
+Other process seems to behave correctly.
+
+Result for system 5 with unlimited broadcasts with 1 second timeout:
+3 {424,0} {424,0} {424,3} {424,4} {424,11}
+4 {254576,7965} {254576,8509} {254576,424} {254576,12840} {254576,8088}
+5 {153287,4366} {153287,4910} {153287,424} {153287,6207} {153287,4489}
+2 {174541,4300} {174541,4844} {174541,424} {174541,6126} {174541,4423}
+1 {173973,4299} {173973,4843} {173973,424} {173973,6124} {173973,4422}
+
+We see the max messages process 3 can send out before timing out, which is around 400. However, process 3, fails to receive most messages, process 3 can only receive little messages before crashing.
+This also seem to effect other processes' messages received from process 3, process 3 only sent out 424 out before crashing, and this is also whats been received by other processes. The messages received from process 3 reflects the impact of process 3 crashing on the system.

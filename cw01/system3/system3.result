@@ -1,0 +1,19 @@
+Mingfei Yao (my1914)
+
+Result for system 3 with 100 broadcast and 1 second timeout:
+1 {100,100} {100,100} {100,100} {100,100} {100,100}
+4 {100,100} {100,100} {100,100} {100,100} {100,100}
+5 {100,100} {100,100} {100,100} {100,100} {100,100}
+3 {100,100} {100,100} {100,100} {100,100} {100,100}
+2 {100,100} {100,100} {100,100} {100,100} {100,100}
+
+All messages sent are received by each process.
+
+Result for system 3 with unlimited broadcast and 1 second timeout:
+2 {132800,4147} {132800,3662} {132800,4111} {132800,4106} {132800,4601}
+5 {183405,1525} {183405,1215} {183405,1487} {183405,1482} {183405,1375}
+4 {118925,4577} {118925,3971} {118925,4537} {118925,4535} {118925,4997}
+1 {142503,3971} {142503,3597} {142503,3935} {142503,3929} {142503,4130}
+3 {218427,5833} {218427,5023} {218427,5794} {218427,5792} {218427,6222}
+
+There see to be less messages received in system 3 compared to system 2. This may be caused by more of the messages are blocked in the PL and BEB while app received the timeout signal, hence more messages ignored.

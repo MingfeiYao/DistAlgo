@@ -1,0 +1,19 @@
+Mingfei Yao (my1914)
+
+Result for system 6 with 1000 broadcasts, 1 second timeout and 80% reliability meter:
+3 {1000,0} {1000,0} {1000,0} {1000,0} {1000,0}
+4 {1000,1} {1000,1} {1000,1} {1000,1} {1000,1}
+2 {1000,1} {1000,1} {1000,1} {1000,1} {1000,1}
+1 {1000,1} {1000,1} {1000,1} {1000,1} {1000,1}
+5 {1000,1} {1000,1} {1000,1} {1000,1} {1000,1}
+
+The result is expected from behaviour of previous systems. Process 3 is able to send out all messages needed before timeout. Other processes have received at least once from all processes. Although every message rebroadcasts after receiving it, process 3 is still unable to receive the message since it has crashed too early.
+
+Result for system 6 with unlimited braodcasts, 1 second timeout and 80% reliability meter:
+3 {2069,0} {2069,0} {2069,0} {2069,0} {2069,0}
+2 {126922,1} {126922,1} {126922,1} {126922,1} {126922,1}
+1 {110965,1} {110965,1} {110965,1} {110965,1} {110965,1}
+5 {156270,1} {156270,1} {156270,1} {156270,1} {156270,1}
+4 {132933,1} {132933,1} {132933,1} {132933,1} {132933,1}
+
+Expected behaviour, however process 3 still fails to receive any messages. This is caused by process 3 crashing before it is able to receive any messages.

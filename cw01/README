@@ -1,0 +1,9 @@
+Mingfei Yao (my1914)
+
+To run each system, cd into the directory and run:
+
+make run
+
+You can also modify system parameters in the system.erl file
+
+Results and comments can be found at .result files in each directory
